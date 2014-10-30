@@ -1,6 +1,13 @@
+import pymongo
 from flask import Flask, render_template
+from pymongo import Connection
 
+conn = Connection('localhost',1258)
 app = Flask(__name__)
+
+db = conn['pd7']
+
+print db.collection_names()
 
 @app.route("/")
 @app.route("/login")
