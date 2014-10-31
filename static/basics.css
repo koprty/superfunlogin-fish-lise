@@ -1,7 +1,14 @@
-#right-heading{
-    float:right;
-    clear:both;
-}
 #top-header{
     background-color:blue;
+    position:absolute;
+}
+#white_block{
+    padding:2em;
+}
+#content-s{
+    text-align:center;
+    color:red;
+    position:relative;
+    margin:6em;
+    padding:2em;
 }
