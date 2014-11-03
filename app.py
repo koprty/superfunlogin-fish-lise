@@ -44,8 +44,7 @@ def login():
 @app.route("/logout")
 def logout():
     session.pop("myuser", None)
-    return "<h1>This is the logout page</h1>" #need to add logout page
-    #return render_template("logout.html")
+    return render_template("base.html", msg = "YOU HAVE LOGGED OUT")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
