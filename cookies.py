@@ -4,6 +4,19 @@ import utils
 app=Flask(__name__)
         
 @app.route("/")
+@app.route("/home")
+def home():
+    if request.method=="GET":
+        return render_template("base.html")
+    else:
+        u = request.form.get('uname',None)
+        pswd = request.form.get('pswd',None)
+        valid_user = utils.authenticate(u,pswd)
+        if not(valid_user):
+            return render_template("base.html",msg=u)
+        else:
+            session['myuser'] = u
+            return redirect(url_for('loggedin1'))
 @app.route("/login",methods=["GET","POST"])
 def login():
     if request.method=="GET":
@@ -35,7 +48,8 @@ def register():
         
 @app.route("/logout")
 def logout():
-    return "<h1>This is the logout page</h1>"
+    session.pop("myuser")
+    return render_template("index.html")
 @app.route("/info")
 def info():
     return "<h1>This is the info page</h1>"
