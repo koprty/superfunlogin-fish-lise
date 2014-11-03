@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request, redirect,session
+from flask import Flask,render_template,request,url_for,redirect,session
 import utils
 
 app=Flask(__name__)
@@ -7,17 +7,17 @@ app=Flask(__name__)
 @app.route("/login",methods=["GET","POST"])
 def login():
     if request.method=="GET":
-        return render_template("index.html")
+        return render_template("base.html")
     else:
         u = request.form.get('uname',None)
         pswd = request.form.get('pswd',None)
         valid_user = utils.authenticate(u,pswd)
         if not(valid_user):
-            return render_template("index.html",name=u)
+            return render_template("base.html",msg=u)
         else:
             session['myuser'] = u
-            return render_template("index.html",
-                                   name=u)
+            return redirect(url_for('loggedin1'))
+       #return render_template("index.html", name=u)
 
 @app.route("/register", methods=["GET","POST"])
 def register():
@@ -42,12 +42,17 @@ def info():
 
 @app.route("/loggedin1")
 def loggedin1():
-    return "<h1>This is the first logged in page</h1>"
+    if "myuser" in session:
+        return render_template("myindex.html")
+    return "<h1>Please log in first</h1>"
 
 @app.route("/loggedin2")
 def loggedin2():
+    if "myuser" in session:
+        return render_template("myindex.html")
     return "<h1>This is the second logged in page</h1>"
 
+app.secret_key="*]%4WQ4ki[uUF!3pZcNbM8_4SsDFSEsd"
 if __name__=="__main__":
    app.debug=True
    app.run(host="0.0.0.0",port=5000)

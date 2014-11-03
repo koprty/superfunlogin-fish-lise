@@ -3,8 +3,10 @@
     position:absolute;
 }
 #content-bg{
-    background-color:green;
-    
+    background-color:green; 
+}
+.error_msg{
+    color:red;
 }
 #white_block{
     padding:1em;
