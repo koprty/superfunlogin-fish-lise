@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for,session
-from pymongo import Connection
+#from pymongo import Connection
 from utils import adduser, authenticate
 
 app = Flask(__name__)
@@ -25,22 +25,19 @@ def login():
         #return "<h1>This is the login page</h1>"
         return render_template("login.html", message = "")
     else:
-        global cur_user
-        global cur_name
         username = request.form.get("uname",None)
         password = request.form.get("pswd",None)
         #button = request.form["b"]
         #if button == "Login":
-        validity = authenticate(username, password)
-        if validity:
-            cur_user = username
-           ####### cur_name = get_name(username) #### IMPLEMENT IN UTILS
+        validity = authenticate(username,password)
+        if not(validity):
+            #return "<h1>This is the login page</h1>"
+            return render_template("login.html", message="Login unsuccessful")
+        else:
+                      ####### cur_name = get_name(username) #### IMPLEMENT IN UTILS
             session['myuser'] = username
             print session
             return redirect(url_for('loggedin1'))
-        else:
-            #return "<h1>This is the login page</h1>"
-            return render_template("login.html", message="Login unsuccessful")
         #else:
             #return redirect(url_for('register'))
         
@@ -93,8 +90,9 @@ def loggedin2():
 
 
 if __name__=="__main__":
-    conn = Connection()
-    db = conn['1258']
+ #   conn = Connection()
+  #  db = conn['1258']
+    print authenticate("zum","zum")
     app.secret_key="*]%4WQ4ki[uUF!3pZcNbM8_4SsDFSEsd"
     app.debug = True
     app.run()
