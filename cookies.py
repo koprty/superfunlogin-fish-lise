@@ -12,7 +12,7 @@ def home():
         u = request.form.get('uname',None)
         pswd = request.form.get('pswd',None)
         valid_user = utils.authenticate(u,pswd)
-        if not(valid_user):
+        if not(valid_user) and not u == None:
             return render_template("base.html",msg=u)
         else:
             session['myuser'] = u
@@ -29,12 +29,12 @@ def login():
             return render_template("base.html",msg=u)
         else:
             session['myuser'] = u
+            print session
             return redirect(url_for('loggedin1'))
        #return render_template("index.html", name=u)
 
 @app.route("/register", methods=["GET","POST"])
 def register():
-    
     if request.method=="GET":
         return render_template("register.html",rconf="Getting register")
     else:
@@ -48,7 +48,7 @@ def register():
         
 @app.route("/logout")
 def logout():
-    session.pop("myuser")
+    session.pop("myuser", None)
     return render_template("index.html")
 @app.route("/info")
 def info():
@@ -58,15 +58,17 @@ def info():
 def loggedin1():
     if "myuser" in session:
         return render_template("myindex.html")
-    return "<h1>Please log in first</h1>"
+    return render_template("login_error.html")
 
 @app.route("/loggedin2")
 def loggedin2():
-    if "myuser" in session:
+    print session
+    if "myuser" in session and not session["myuser"] == None :
         return render_template("myindex.html")
-    return "<h1>This is the second logged in page</h1>"
+    return render_template("login_error.html")
+    
 
-app.secret_key="*]%4WQ4ki[uUF!3pZcNbM8_4SsDFSEsd"
 if __name__=="__main__":
-   app.debug=True
-   app.run(host="0.0.0.0",port=5000)
+    app.secret_key="*]%4WQ4ki[uUF!3pZcNbM8_4SsDFSEsd"
+    app.debug=True
+    app.run(host="0.0.0.0",port=5000)

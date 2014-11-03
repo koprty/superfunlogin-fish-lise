@@ -1,7 +1,6 @@
 <html>
   <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
   <link rel="stylesheet" href="../static/basics.css">
-  
   <div class="header top-header content-s">
     <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed" style="text-align:center" >
       <a class="pure-menu-heading" href="">Your Site</a>
@@ -14,8 +13,11 @@
       {% endblock tophead %}
     </div>
   </div>
+  
+
   <div id="white_block"></div>
 {% block content_block %}
+  <!body style="margin:0em" id="content-bg">  
   <div id="content-bg">
       <br>
       <br>
@@ -44,6 +46,8 @@
     </p>
   </div>
   <div id="white_block"></div> 
-  </div> 
+  
   {% endblock content_block %}
+</div> 
+<!/body>
 </html>
