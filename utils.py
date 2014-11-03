@@ -1,11 +1,11 @@
-d = {}
+d = {"zum":"zum"}
+
+
 def authenticate(uname,pword):
     try:
         return d[uname]==pword;
     except:  #if error occurs if uname not in d
         return False
-
-
 
 def adduser(uname,pword):
     if uname not in d:

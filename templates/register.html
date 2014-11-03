@@ -1,28 +1,52 @@
 <html>
-<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
-<link rel="stylesheet" href="../static/basics.css">
-
-<div class="header top-header">
+  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+  <link rel="stylesheet" href="../static/basics.css">
+  
+  <div class="header top-header">
     <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed" style="text-align:center" >
-        <a class="pure-menu-heading" href="">Your Site</a>
-
-        <ul>
-          <li class="pure-menu-selected"><a href="#">Home</a></li>
-          <li><a href="#">Tour</a></li>
-          <li><a href="#">Sign Up</a></li>
-	</ul>
-	  <form id="right-heading" class="pure-form" >
-	      <fieldset>
-		<input type="email" name="runame" placeholder="Username">
-		<input type="password" name="rpswd" placeholder="Password">
-		<button type="submit" class="pure-button pure-button-primary">Sign in</button>
-	      </fieldset>
-	  </form>
-	  
-   </div>
-</div>
-
-
-
+      <a class="pure-menu-heading" href="">Your Site</a>
+      <ul>
+	<li><a href="/">Home</a></li>
+	<li><a href="/login">Login</a></li>
+	<li class="pure-menu-selected"><a href="/register">Register</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="white_block">    </div>
+  <div id="content-bg">
+    <br>
+    <br>
+    <div id="content-s">   
+      <h1 style="color:red">{{rconf}}</h1>
+      <h1 class="splash-head">Super Fun Stuff</h1>
+      <p class="splash-subhead">
+	
+	<form class="pure-form pure-form-aligned" method="POST">
+          <div class="pure-control-group">
+            <label for="name">Username</label>
+            <input id="runame" type="text" placeholder="Username">
+          </div>
+	  <br>
+          <div class="pure-control-group">
+            <label for="password">Password</label>
+            <input id="rpswd" type="password" placeholder="Password">
+          </div>
+	  <br>
+	  <div class="pure-control-group">
+            <label for="password">Renter Password</label>
+            <input id="rpswd2" type="password" placeholder="Password">
+          </div>
+	  <br>
+	  <div class="pure-control-group">
+            <label for="name">Nickname</label>
+            <input id="nickname" type="text" placeholder="Name">
+          </div>
+	  <br>
+	  <button type="submit" class="pure-button pure-button-primary">Submit</button>
+        </form>
+      </p>
+    </div>
+    <div id="white_block"></div> 
+  </div>
 
 </html>

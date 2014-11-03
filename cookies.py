@@ -9,23 +9,27 @@ def login():
     if request.method=="GET":
         return render_template("index.html")
     else:
-        u = request.form['uname']
-        pswd = request.form['pswd']
+        u = request.form.get('uname',None)
+        pswd = request.form.get('pswd',None)
         valid_user = utils.authenticate(u,pswd)
         if not(valid_user):
-            return render_template("index.html",l=l)
+            return render_template("index.html",name=u)
         else:
             session['myuser'] = u
-            
             return render_template("index.html",
-                                   name=uname)
+                                   name=u)
 
-@app.route("/register")
+@app.route("/register", methods=["GET","POST"])
 def register():
-        ru = request.form['runame']
-        rpswd = request.form['rpswd']
-        if adduser(ru,rpswd):
-                return render_template("index.html", rconf = "You have successfully registered.")
+    
+    if request.method=="GET":
+        return render_template("register.html",rconf="Getting register")
+    else:
+        ru = request.form.get('runame',None)
+        rpswd = request.form.get('rpswd',None)
+        print ru, rpswd
+        if utils.adduser(ru,rpswd):
+                return render_template("register.html", rconf="You have successfully registered.")
         else:
                 return render_template("register.html", rconf="Username taken. Try Again.")
         
