@@ -1,9 +1,9 @@
 <html>
   <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
   <link rel="stylesheet" href="../static/basics.css">
-  <div class="header top-header content-s">
+  <div class="header top-header">
     <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed" style="text-align:center" >
-      <a class="pure-menu-heading" href="">Your Site</a>
+      <a class="pure-menu-heading" href="">Mongo</a>
      {% block tophead %}
       <ul>
 	<li><a href="/">Home</a></li>
@@ -13,8 +13,7 @@
       {% endblock tophead %}
     </div>
   </div>
-  
-
+  <body id="content-bg">
   <div id="white_block"></div>
 {% block content_block %}
   <!body style="margin:0em" id="content-bg">  
@@ -23,24 +22,11 @@
       <br>
   <div id="content-s">      
     <h1 class="error_msg">{{msg}}</h1>
-    <h1 class="splash-head">Super Fun Stuff</h1>
-    <p class="splash-subhead">
-      <form class="pure-form pure-form-aligned" method="POST">
-	<div class="pure-control-group">
-            <label for="name">Username</label>
-            <input id="uname" type="text" placeholder="Username">
-        </div>
-	<br>
-        <div class="pure-control-group">
-            <label for="password">Password</label>
-            <input id="pswd" type="password" placeholder="Password">
-        </div>
-	<br>
-	<button type="submit" name="b" value="Login" class="pure-button pure-button-primary">Submit</button>
-      </form>
-      
-    </p>
+    <h1>Super Fun Stuff</h1>
+    <br>
     <p>
+      <img src="http://www.naturalhealth365.com/images/eating-mangoes.jpg" width="200px" height="200px">
+       <div id="white_block"></div>
       <a href="/login" class="pure-button pure-button-primary">Login Page</a>
       <a href="/register" class="pure-button pure-button-primary">Register Page</a>
     </p>
@@ -49,5 +35,5 @@
   
   {% endblock content_block %}
 </div> 
-<!/body>
+</body>
 </html>

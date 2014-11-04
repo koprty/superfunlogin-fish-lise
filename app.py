@@ -56,8 +56,10 @@ def register():
         password = request.form.get("rpswd",None)
         confirm = request.form.get("confirm_password",None)
         name = request.form.get("nickname",None)
-        if (confirm == password):
-            if adduser(username,name): #took out password -> reput when dictionary made into mongodb
+        if (username == None or password == None or confirm == None):
+            return render_template("register.html",rconf="Please fill in required elements.")
+        elif(confirm == password):
+            if adduser(username,name): #took out password -> reput when dictionary made into mongodb AND also add the nickname
                 return render_template("register.html", rconf="You have successfully registered.")
                 #return redirect(url_for('login'))
             else:
