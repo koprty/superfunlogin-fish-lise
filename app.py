@@ -7,34 +7,28 @@ app = Flask(__name__)
 @app.route("/", methods=["POST","GET"])
 @app.route("/home")
 def home():
-    if request.method=="GET":
-        return render_template("base.html")
-    else:
-        u = request.form.get('uname',None)
-        pswd = request.form.get('pswd',None)
-        valid_user = authenticate(u,pswd)
-        if not(valid_user) and not u == None:
-            return render_template("base.html",msg=u)
-        else:
-            session['myuser'] = u
-            return redirect(url_for('myinfo'))
-
+    return render_template("base.html")
+    
+@app.route("/home2")
+def home2():
+    return render_template("home2.html")
 @app.route("/login", methods=["POST","GET"])
 def login():
-    if request.method=="GET":
-        return render_template("login.html", message = "")
-    else:
-        username = request.form.get("uname",None)
-        password = request.form.get("pswd",None)
-        validity = authenticate(username,password)
-        if not(validity):
-            return render_template("login.html", msg="Incorrect Username and Password. Try again.")
+    if not "myuser" in session or session["myuser"]==None :
+        if request.method=="GET":
+            return render_template("login.html", message = "")
         else:
-                      ####### cur_name = get_name(username) #### IMPLEMENT IN UTILS
-            session['myuser'] = username
-            return redirect(url_for('myinfo'))
-        #else:
-            #return redirect(url_for('register'))
+            username = request.form.get("uname",None)
+            password = request.form.get("pswd",None)
+            validity = authenticate(username,password)
+            if not(validity):
+                return render_template("login.html", msg="Incorrect Username and Password. Try again.")
+            else:
+                session['myuser'] = username
+                return redirect(url_for('myinfo'))
+    else:
+        return redirect(url_for('myinfo'))
+        
         
 @app.route("/logout")
 def logout():
