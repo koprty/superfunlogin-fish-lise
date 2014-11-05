@@ -14,22 +14,28 @@ def home2():
     return render_template("home2.html")
 @app.route("/login", methods=["POST","GET"])
 def login():
-    if not "myuser" in session or session["myuser"]==None :
-        if request.method=="GET":
-            return render_template("login.html", message = "")
-        else:
-            username = request.form.get("uname",None)
-            password = request.form.get("pswd",None)
-            validity = authenticate(username,password)
-            if not(validity):
-                return render_template("login.html", msg="Incorrect Username and Password. Try again.")
+    if request.method=="GET":
+        try:
+            if "myuser" in session or not session["myuser"]==None :
+                return redirect(url_for('myinfo'))
             else:
+                return render_template("login.html")
+        except:
+            return render_template("login.html")
+    else:
+        username = request.form.get("uname",None)
+        password = request.form.get("pswd",None)
+        validity = authenticate(username,password)
+        if not(validity):
+            return render_template("login.html", msg="Incorrect Username and Password. Try again.")
+        else:
+            try:
+                if "myuser" in session or not session["myuser"]==None :
+                    return redirect(url_for('myinfo'))
+            except:
                 session['myuser'] = username
                 return redirect(url_for('myinfo'))
-    else:
-        return redirect(url_for('myinfo'))
-        
-        
+
 @app.route("/logout")
 def logout():
     session.pop("myuser", None)
@@ -38,6 +44,11 @@ def logout():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method=="GET":
+        try:
+            if "myuser" in session or not session["myuser"]==None :
+                return redirect(url_for('myinfo'))
+        except:
+            return render_template("register.html")
         return render_template("register.html")
     else:
         username = request.form.get("runame",None)
@@ -59,7 +70,7 @@ def register():
 def info():
     if "myuser" in session and not session["myuser"] == None :
         return render_template("secretpg.html")
-    return render_template("login.html")
+    return redirect(url_for('login'))
 
 #only viewable when user is logged in
 @app.route("/myinfo")
