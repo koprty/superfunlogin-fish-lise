@@ -32,7 +32,7 @@ def login():
         validity = authenticate(username,password)
         if not(validity):
             #return "<h1>This is the login page</h1>"
-            return render_template("login.html", message="Login unsuccessful")
+            return render_template("login.html", msg="Incorrect Username and Password. Try again.")
         else:
                       ####### cur_name = get_name(username) #### IMPLEMENT IN UTILS
             session['myuser'] = username
@@ -50,14 +50,14 @@ def logout():
 def register():
     if request.method=="GET":
         #return "<h1>This is the register page</h1>"
-        return render_template("register.html", rconf ="Getting register")
+        return render_template("register.html")
     else:
         username = request.form.get("runame",None)
         password = request.form.get("rpswd",None)
         confirm = request.form.get("confirm_password",None)
         name = request.form.get("nickname",None)
-        if (username == None or password == None or confirm == None):
-            return render_template("register.html",rconf="Please fill in required elements.")
+        if (len(username)<3 or len(username)<3):
+            return render_template("register.html",rconf="Please fill in required elements. Each required element must have at least 3 characters.")
         elif(confirm == password):
             if adduser(username,name): #took out password -> reput when dictionary made into mongodb AND also add the nickname
                 return render_template("register.html", rconf="You have successfully registered.")
@@ -70,25 +70,21 @@ def register():
         
 @app.route("/info")
 def info():
-    return "<h1>This is the info page</h1>"
-    #return render_template("info.html")
-
+    if "myuser" in session and not session["myuser"] == None :
+        return render_template("secretpg.html")
+    return render_template("login.html")
 @app.route("/loggedin1")
 def loggedin1():
     print session
     if "myuser" in session and not session["myuser"] == None :
         return render_template("myindex.html")
-    return "<h1>Failure to login: This is the first logged in page</h1>"
-    #return render_template("loggedin1.html")
+    return render_template("login.html")
 
 @app.route("/loggedin2")
 def loggedin2():
     if "myuser" in session and not session["myuser"]==None :
-        return "<h1> You have successfully logged in </h1>"#render_template("myindex.html")
-    return "<h1>Failure to login: This is the second logged in page</h1>"
-    #return render_template("loggedin2.html")
-
-
+        return render_template("myinfo.html")
+    return render_template("login.html")
 
 if __name__=="__main__":
  #   conn = Connection()

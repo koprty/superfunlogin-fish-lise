@@ -7,43 +7,38 @@
 </ul>
 {% endblock tophead %}
 {% block content_block %}
-  <div id="content-bg">
-    <br>
-    <br>
-    <div id="content-s">   
-      <span class="error_msg">{{rconf}}</span>
-      <h1 class="splash-head">Super Fun Stuff</h1>
-      <p class="splash-subhead">
-	
-	<form class="pure-form pure-form-aligned" method="POST">
-          <div class="pure-control-group">
-            <label for="name">Username</label>
-            <input name="runame" type="text" placeholder="Username">
-	    <span class="error_msg">*</span>
-          </div>
-	  <br>
-          <div class="pure-control-group">
-            <label for="password">Password</label>
-            <input name="rpswd" type="password" placeholder="Password">
-	    <span class="error_msg">*</span>
-          </div>
-	  <br>
-	  <div class="pure-control-group">
-            <label for="password">Renter Password</label>
-            <input name="confirm_password" type="password" placeholder="Password">
-	    <span class="error_msg">*</span>
-          </div>
-	  <br>
-	  <div class="pure-control-group">
-            <label for="name">Nickname</label>
-            <input name="nickname" type="text" placeholder="Name">
-          </div>
-	  <br>
-	  <button type="submit" class="pure-button pure-button-primary">Submit</button>
-        </form>
-      </p>
+<h1 class="splash-head">Registering for Super Fun Stuff</h1>
+<span class="error_msg" style="font-size:0.8em">*REQUIRED FIELD</span>
+<br><br>
+<span class="error_msg">{{rconf}}</span>
+
+<p class="splash-subhead">
+  <form class="pure-form pure-form-aligned" method="POST">
+    <div class="pure-control-group">
+      <label for="name">Username</label>
+      <input name="runame" type="text" placeholder="Username">
+      <span class="error_msg">*</span>
     </div>
-    <div id="white_block"></div> 
-  </div>
+    <br>
+    <div class="pure-control-group">
+      <label for="password">Password</label>
+      <input name="rpswd" type="password" placeholder="Password">
+      <span class="error_msg">*</span>
+    </div>
+    <br>
+    <div class="pure-control-group">
+      <label for="password">Renter Password</label>
+      <input name="confirm_password" type="password" placeholder="Password">
+      <span class="error_msg">*</span>
+          </div>
+    <br>
+    <div class="pure-control-group">
+      <label for="name">Nickname</label>
+      <input name="nickname" type="text" placeholder="Name">
+    </div>
+    <br>
+    <button type="submit" class="pure-button pure-button-primary">Submit</button>
+  </form>
+</p>
 {% endblock content_block %}
 </html>

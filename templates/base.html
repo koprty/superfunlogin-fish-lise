@@ -15,12 +15,11 @@
   </div>
   <body id="content-bg">
   <div id="white_block"></div>
-{% block content_block %}
-  <!body style="margin:0em" id="content-bg">  
   <div id="content-bg">
       <br>
       <br>
-  <div id="content-s">      
+  <div id="content-s">  
+    {% block content_block %}
     <h1 class="error_msg">{{msg}}</h1>
     <h1>Super Fun Stuff</h1>
     <br>
@@ -30,10 +29,9 @@
       <a href="/login" class="pure-button pure-button-primary">Login Page</a>
       <a href="/register" class="pure-button pure-button-primary">Register Page</a>
     </p>
+    {% endblock content_block %}
   </div>
-  <div id="white_block"></div> 
-  
-  {% endblock content_block %}
-</div> 
+  <div id="white_block"></div>  
+  </div> 
 </body>
 </html>
