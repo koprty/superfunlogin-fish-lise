@@ -1,0 +1,118 @@
+from flask import Flask, render_template, request, redirect, url_for,session
+from pymongo import MongoClient
+from functools import wraps
+
+app = Flask(__name__)
+
+def authenticated(f):
+    #@wraps(f)
+    def inner():
+        if "myuser" in session:
+            r = f()
+            return r
+        else:
+            return redirect(url_for("login"))
+    return inner
+
+#viewable when logged in and not logged in
+@app.route("/", methods=["POST","GET"])
+@app.route("/home")
+def home():
+    return render_template("base.html")
+@app.route("/home2")
+@authenticated
+def home2():
+    return render_template("home2.html")
+@authenticated
+@app.route("/login", methods=["POST","GET"])
+def login():
+    if request.method=="GET":
+        return render_template("login.html");
+    else:
+        username = request.form.get("uname",None)
+        password = request.form.get("pswd",None)
+        validity = authenticate(username,password)
+        if not(validity):
+            return render_template("login.html", msg="Incorrect Username and Password. Try again.")
+        else:
+            try:
+                if "myuser" in session or not session["myuser"]==None :
+                    return redirect(url_for('myinfo'))
+            except:
+                session['myuser'] = username
+                return redirect(url_for('myinfo'))
+
+@app.route("/logout")
+def logout():
+    session.pop("myuser", None)
+    return render_template("base.html", msg = "YOU HAVE LOGGED OUT")
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method=="GET":
+        try:
+            if "myuser" in session or not session["myuser"]==None :
+                return redirect(url_for('myinfo'))
+        except:
+            return render_template("register.html")
+        return render_template("register.html")
+    else:
+        username = request.form.get("runame",None)
+        password = request.form.get("rpswd",None)
+        confirm = request.form.get("confirm_password",None)
+        if (len(username)<3 or len(username)<3):
+            return render_template("register.html",rconf="Please fill in required elements. Each required element must have at least 3 characters.")
+        elif(confirm == password):
+            if adduser(username,password):
+                return render_template("register.html", rconf="You have successfully registered.")
+            else:
+                return render_template("register.html", rconf="Username taken. Try Again.")
+        else:
+            return render_template("register.html", rconf = "Password doesn't match confirmation.")
+
+ 
+#only viewable when user is logged in       
+@authenticated
+@app.route("/info")
+def info():
+    if "myuser" in session and not session["myuser"] == None :
+        return render_template("secretpg.html")
+    return redirect(url_for('login'))
+
+#only viewable when user is logged in
+@authenticated
+@app.route("/myinfo")
+def myinfo():
+    if "myuser" in session and not session["myuser"]==None :
+        return render_template("myinfo.html", user=session["myuser"], password=getpword(session["myuser"]))
+    return redirect(url_for('login'))
+
+def getpword(uname):
+    names = db.info.find()
+    for name in names:
+        if name['user'] == uname:
+            return name['pass']
+
+def authenticate(uname,pword):
+    names = db.info.find()
+    for name in names:
+        if name['user'] == uname:
+            if name['pass'] == pword:
+                return True
+    return False
+
+def adduser(uname,pword):
+    if db.info.find_one({'user':uname}) == None:
+        d = {'user':uname,'pass':pword}
+        db.info.insert(d)
+        return True
+    return False
+
+if __name__=="__main__":
+    client = MongoClient()
+    db = client['1258']
+    app.secret_key="*]%4WQ4ki[uUF!3pZcNbM8_4SsDFSEsd"
+    app.debug = True
+    app.run()
+
+
